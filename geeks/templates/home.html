@@ -12,9 +12,15 @@
 </form> {% endcomment %}
 
 {% comment %} Post Request {% endcomment %}
-<form action = "" method = "POST">
+{% comment %} <form action = "" method = "POST">
     {% csrf_token %}
     <label for="your_name">Your name: </label>
     <input id="your_name" type="text" name="your_name">
     <input type="submit" value="OK">
+</form> {% endcomment %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
 </form>

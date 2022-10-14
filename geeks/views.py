@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import InputForm
+# from .forms import InputForm
 from .forms import GeeksForm
 # Create your views here.
 
@@ -18,7 +18,8 @@ def index(request):
 
 # creating view of form using modelsform
 def home_view(request):
-    # context={}
-    # context['form'] = GeeksForm() # creating instance of GeeksForm which is using the django models form
+    context = {}
+    form = GeeksForm(request.POST or None)
+    context['form'] = form
     print(request.POST)
-    return render(request, "home.html")
+    return render(request, "home.html", context)
