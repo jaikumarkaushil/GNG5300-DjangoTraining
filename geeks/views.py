@@ -20,4 +20,5 @@ def index(request):
 def home_view(request):
     # context={}
     # context['form'] = GeeksForm() # creating instance of GeeksForm which is using the django models form
+    print(request.POST)
     return render(request, "home.html")

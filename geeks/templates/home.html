@@ -4,7 +4,16 @@
     <input type="submit" value=Submit">
 </form> {% endcomment %}
 
-<form action = "" method = "get">
+{% comment %} GET Request {% endcomment %}
+{% comment %} <form action = "" method = "get">
+    <label for="your_name">Your name: </label>
+    <input id="your_name" type="text" name="your_name">
+    <input type="submit" value="OK">
+</form> {% endcomment %}
+
+{% comment %} Post Request {% endcomment %}
+<form action = "" method = "POST">
+    {% csrf_token %}
     <label for="your_name">Your name: </label>
     <input id="your_name" type="text" name="your_name">
     <input type="submit" value="OK">
