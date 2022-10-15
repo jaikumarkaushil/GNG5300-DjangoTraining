@@ -1,7 +1,10 @@
 from datetime import datetime
-from django.shortcuts import render
 
-# from .forms import GeeksForm
+from django.shortcuts import (get_object_or_404,
+                              render,
+                              HttpResponseRedirect)
+
+from .forms import GeeksForm
 from .models import GeeksModel
 
 # importing formset_factory
@@ -11,8 +14,23 @@ from .models import GeeksModel
 
 from django.http import HttpResponse
 
-#class based view - 300275126
+#function based CRUD operations - 300275126
 from django.views.generic.list import ListView
+
+# function based create operation - 300275126
+def create_view(request):
+    context ={}
+    # add the dictionary during initialization
+    form = GeeksForm(request.POST or None)
+    print(form.is_valid)
+    if form.is_valid():
+        form.save()
+        print(form.instance.id)
+    else:
+        print("Not valid. Retry!")
+
+    context['form']= form
+    return render(request, "create_view.html", context)
 
 class GeeksList(ListView):
     # specify the model for list view
@@ -26,22 +44,62 @@ class GeeksList(ListView):
         
         return render(request, "geeksmodel_list.html", context)
 
-# creating form view
-# def home_view(request):
-#     context={}
-#     context['form'] = InputForm()  # creating instance of InputForm and storing in context form property
-#     return render(request, "home.html", context) # defined a templates folder in app level for keeping all templates at one place for specific app
-
+# CRUD - Retrieve using List
 def list_view(request):
-    # dictionary for initial data with
-    # field names as keys
     context ={}
-
-    # add the dictionary during initialization
     context["dataset"] = GeeksModel.objects.all()
     
     return render(request, "list_view.html", context)
 
+def detail_view(request, id):
+    context ={}
+
+    # add the dictionary during initialization
+    context["data"] = GeeksModel.objects.get(id = id)
+    print(context)
+    return render(request, "detail_view.html", context)
+
+# update view for details - 300275126
+def update_view(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+
+    # fetch the object related to passed id
+    obj = get_object_or_404(GeeksModel, id = id)
+
+    # pass the object as instance in form
+    form = GeeksForm(request.POST or None, instance = obj)
+
+    # save the data from the form and
+    # redirect to detail_view
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("get/"+id)
+
+    # add form dictionary to context
+    context["form"] = form
+
+    return render(request, "update_view.html", context)
+
+# delete view for details
+def delete_view(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+
+    # fetch the object related to passed id
+    obj = get_object_or_404(GeeksModel, id = id)
+
+
+    if request.method =="POST":
+        # delete object
+        obj.delete()
+        # after deleting redirect to
+        # home page
+        return HttpResponseRedirect("/")
+
+    return render(request, "delete_view.html", context)
 # create a function
 def geeks_view(request):
     # fetch date and time
@@ -50,56 +108,3 @@ def geeks_view(request):
     html = "Time is {}".format(now)
     # return response
     return HttpResponse(html)
-
-# def modelformset_view(request):
-#     context ={}
-
-#     GeeksFormSet = modelformset_factory(GeeksModel, fields=['title', 'description'], extra = 3)
-#     formset = GeeksFormSet(request.POST)
-#     if formset.is_valid():
-#         for form in formset:
-#             form.save()
-#             print(form.cleaned_data)
-#     # Add the formset to context dictionary
-#     else: 
-#         print("Not Valid")
-#     context['formset']= formset
-#     # Add the formset to context dictionary
-#     context['formset']= formset
-#     return render(request, "home.html", context)
-
-# # creating view of form using modelsform
-# def home_view(request):
-#     context ={}
-#     # create object of form
-#     form = GeeksForm(request.POST or None, request.FILES or None)
-    
-#     # check if form data is valid
-#     print(form.errors)
-#     if form.is_valid():
-#         # save the form data to model
-#         form.save()
-#         print(request.POST)
-#     else:
-#         print("Not Valid")
-#     context['form']= form
-    
-#     return render(request, "home.html", context)
-# # assignment 2 - Jai_300275126 - formsets
-# def formset_view(request):
-#     context ={}
-
-#     # creating a formset
-#     GeeksFormSet = formset_factory(GeeksForm, extra = 3) 
-#     formset = GeeksFormSet(request.POST or None)
-    
-#     if formset.is_valid():
-#         for form in formset:
-#             form.save()
-#             print(form.cleaned_data)
-#     # Add the formset to context dictionary
-#     else: 
-#         print("Not Valid")
-#     context['formset']= formset
-    
-#     return render(request, "home.html", context)
