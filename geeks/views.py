@@ -1,6 +1,10 @@
 from django.shortcuts import render
-# from .forms import InputForm
+
 from .forms import GeeksForm
+
+# importing formset_factory
+from django.forms import formset_factory
+
 # Create your views here.
 
 
@@ -31,5 +35,22 @@ def home_view(request):
     else:
         print("Not Valid")
     context['form']= form
+    
+    return render(request, "home.html", context)
+# assignment 2 - Jai_300275126
+def formset_view(request):
+    context ={}
+
+    # creating a formset
+    GeeksFormSet = formset_factory(GeeksForm, extra = 3) 
+    formset = GeeksFormSet(request.POST or None)
+    print(formset.errors)
+    if formset.is_valid():
+        for form in formset:
+            print(form.cleaned_data)
+    # Add the formset to context dictionary
+    else: 
+        print("Not Valid")
+    context['formset']= formset
     
     return render(request, "home.html", context)

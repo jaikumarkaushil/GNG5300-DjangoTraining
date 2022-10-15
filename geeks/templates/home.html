@@ -1,14 +1,21 @@
-{% comment %} <form action = "" method = "post">
+<form method="POST" enctype="multipart/form-data">
+      
+    <!-- Management data of formset -->
+    {{ formset.management_data }}
+  
+    <!-- Security token -->
     {% csrf_token %}
-    {{form }}
-    <input type="submit" value=Submit">
-</form> {% endcomment %}
+  
+    <!-- Using the formset -->
+    {{ formset.as_p }}
+      
+    <input type="submit" value="Submit">
+</form>
 
-{% comment %} GET Request {% endcomment %}
-{% comment %} <form action = "" method = "get">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name">
-    <input type="submit" value="OK">
+{% comment %} <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
 </form> {% endcomment %}
 
 {% comment %} Post Request {% endcomment %}
@@ -19,8 +26,18 @@
     <input type="submit" value="OK">
 </form> {% endcomment %}
 
-<form method="POST">
+
+{% comment %} GET Request {% endcomment %}
+{% comment %} <form action = "" method = "get">
+    <label for="your_name">Your name: </label>
+    <input id="your_name" type="text" name="your_name">
+    <input type="submit" value="OK">
+</form> {% endcomment %}
+
+{% comment %} <form action = "" method = "post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+    {{form }}
+    <input type="submit" value=Submit">
+</form> {% endcomment %}
+
+

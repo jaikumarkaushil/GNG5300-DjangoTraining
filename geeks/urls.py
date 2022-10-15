@@ -7,7 +7,8 @@ from django.conf.urls.static import static #add this
 
 urlpatterns=[
     path('admin/', admin.site.urls),
-    path('', views.home_view)
+    # path('', views.home_view)
+    path('', views.formset_view)
 ]
 
 if settings.DEBUG: #add this
