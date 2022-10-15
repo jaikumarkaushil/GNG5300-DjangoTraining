@@ -7,7 +7,10 @@ class GeeksForm(forms.Form):
     # model forms
     class Meta:
         model = GeeksModel
-        fields = "__all__"
+        fields = [
+            'title',
+            'description'
+        ]
 
     # title = forms.CharField()
     # description = forms.CharField()

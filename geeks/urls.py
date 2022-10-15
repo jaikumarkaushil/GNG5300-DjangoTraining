@@ -10,7 +10,8 @@ urlpatterns=[
     # path('', views.home_view)
     # path('', views.formset_view)
     # path('', views.modelformset_view)
-    path('', views.list_view)
+    path('list_view/', views.list_view),
+    path('', views.GeeksList.as_view())
 ]
 
 if settings.DEBUG: #add this

@@ -9,11 +9,22 @@ from .models import GeeksModel
 # from django.forms import modelformset_factory
 # Create your views here.
 
-
 from django.http import HttpResponse
 
-def index(request):
-    return HttpResponse("Hello Geeks")
+#class based view - 300275126
+from django.views.generic.list import ListView
+
+class GeeksList(ListView):
+    # specify the model for list view
+    model = GeeksModel
+
+    def get(self, request):
+        context ={}
+
+        # add the dictionary during initialization
+        context["object_list"] = GeeksModel.objects.all()
+        
+        return render(request, "geeksmodel_list.html", context)
 
 # creating form view
 # def home_view(request):
