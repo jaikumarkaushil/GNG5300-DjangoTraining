@@ -4,10 +4,10 @@ from django import forms
 from .models import GeeksModel
 
 class GeeksForm(forms.Form):
-    # not using model forms
-    # class Meta:
-    #     model = GeeksModel
-    #     fields = "__all__"
+    # model forms
+    class Meta:
+        model = GeeksModel
+        fields = "__all__"
 
-    title = forms.CharField()
-    description = forms.CharField()
+    # title = forms.CharField()
+    # description = forms.CharField()
