@@ -18,8 +18,18 @@ def index(request):
 
 # creating view of form using modelsform
 def home_view(request):
-    context = {}
-    form = GeeksForm(request.POST or None)
-    context['form'] = form
-    print(request.POST)
+    context ={}
+    # create object of form
+    form = GeeksForm(request.POST or None, request.FILES or None)
+    
+    # check if form data is valid
+    print(form.errors)
+    if form.is_valid():
+        # save the form data to model
+        form.save()
+        print(request.POST)
+    else:
+        print("Not Valid")
+    context['form']= form
+    
     return render(request, "home.html", context)
