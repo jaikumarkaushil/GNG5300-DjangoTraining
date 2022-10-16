@@ -8,10 +8,17 @@ from django.conf.urls.static import static #add this
 # CRUD - 300275126
 urlpatterns=[
     path('admin/', admin.site.urls),
-    path('', views.create_view),
-    path('get/<id>', views.detail_view ),
-    path('update/<id>', views.update_view),
-    path('delete/<id>', views.delete_view)
+    path('about/', views.MyView.as_view()),
+    path('', views.GeeksCreate.as_view()),
+    path('get/', views.GeeksList.as_view()),
+    path('get_by_id/<pk>/', views.GeeksDetailView.as_view()),
+    path('update/<pk>/', views.GeeksUpdateView.as_view()),
+    path('delete/<pk>/', views.GeeksDeleteView.as_view()),
+    path('formview', views.GeeksFormView.as_view())
+    # path('', views.create_view),
+    # path('get/<id>', views.detail_view ),
+    # path('update/<id>', views.update_view),
+    # path('delete/<id>', views.delete_view)
 ]
 
 if settings.DEBUG: #add this
